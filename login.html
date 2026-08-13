@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logga in - Kommunkartan</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    
+    <style>
+        /* M3 FÄRGPALETT & VARIABLER */
+        :root {
+            /* LJUST LÄGE */
+            --bg-color: #fdfdfd;
+            --card-bg: #f3f4f9;       /* Surface Container Low */
+            --text-main: #1b1b1f;     /* On Surface */
+            --text-sub: #44474e;      /* On Surface Variant */
+            
+            /* Input-specifikt */
+            --input-bg: #e1e2e9;      /* Surface Container Highest */
+            --input-indicator: #44474e; 
+            --primary: #3f51b5;       /* Primary */
+            --on-primary: #ffffff;
+            
+            /* Felhantering */
+            --error-container: #ffdad6;
+            --on-error-container: #410002;
+            --error-text: #ba1a1a;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* MÖRKT LÄGE */
+                --bg-color: #111318;
+                --card-bg: #1a1c22;
+                --text-main: #e2e2e6;
+                --text-sub: #c4c6d0;
+                
+                --input-bg: #2a2c32;
+                --input-indicator: #8e9099;
+                --primary: #b4c5ff;
+                --on-primary: #001a40;
+                
+                --error-container: #93000a;
+                --on-error-container: #ffdad6;
+                --error-text: #ffb4ab;
+            }
+        }
+
+        /* GRUNDLÄGGANDE RESET */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s ease;
+            
+            /* Flex-centrering */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100dvh;
+        }
+
+        /* LOGOTYP-HANTERING */
+        .logo-container {
+            width: 100%;
+            max-width: 260px;
+            margin-bottom: 32px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Logik för att växla logotyp */
+        .logo-dark { display: none !important; }
+        .logo-light { display: block !important; }
+
+        @media (prefers-color-scheme: dark) {
+            .logo-dark { display: block !important; }
+            .logo-light { display: none !important; }
+        }
+
+        /* LOGIN CARD (M3) */
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 28px; /* M3 Extra Large shape */
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Elevation 1 */
+        }
+
+        h1 {
+            font-size: 1.5rem; /* M3 Headline Small */
+            margin: 0 0 32px 0;
+            color: var(--text-main);
+            font-weight: 400;
+            text-align: center;
+        }
+
+        /* FELMEDDELANDE (Error Container) */
+        .error-banner {
+            display: none; /* Döljs default */
+            align-items: center;
+            gap: 12px;
+            background-color: var(--error-container);
+            color: var(--on-error-container);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .error-banner .material-symbols-outlined { font-size: 20px; }
+
+        /* FORMULÄR */
+        form { display: flex; flex-direction: column; gap: 24px; }
+
+        /* INPUT FIELDS (M3 Filled Text Field) */
+        .input-group {
+            position: relative;
+            background-color: var(--input-bg);
+            border-radius: 4px 4px 0 0; /* M3 standard */
+            height: 56px;
+            transition: background-color 0.2s;
+        }
+
+        .input-group:hover {
+            filter: brightness(0.96); /* State layer hover */
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            padding: 24px 16px 8px 16px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--input-indicator);
+            font-family: inherit;
+            font-size: 1rem; /* 16px */
+            color: var(--text-main);
+            outline: none;
+            caret-color: var(--primary);
+        }
+
+        /* Input Focus State */
+        input:focus {
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* Floating Label Logic */
+        label {
+            position: absolute;
+            left: 16px;
+            top: 18px;
+            color: var(--text-sub);
+            font-size: 1rem;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            pointer-events: none; /* Klick går igenom till input */
+        }
+
+        /* När input är i fokus, har text, eller autofylls -> Flytta etikett */
+        input:focus + label,
+        input:not(:placeholder-shown) + label,
+        input:-webkit-autofill + label {
+            top: 6px;
+            font-size: 0.75rem; /* 12px */
+            color: var(--primary);
+        }
+        
+        /* Hantera Autofill-färger (Webkit) */
+        input:-webkit-autofill {
+            -webkit-text-fill-color: var(--text-main);
+            -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* KNAPP (M3 Filled Button) */
+        .login-btn {
+            margin-top: 8px;
+            height: 48px;
+            border-radius: 24px; /* Full pill shape */
+            background-color: var(--primary);
+            color: var(--on-primary);
+            font-weight: 500;
+            font-size: 1rem; /* Label Large */
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: box-shadow 0.2s, opacity 0.2s;
+        }
+
+        .login-btn:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            opacity: 0.92;
+        }
+
+        .login-btn:active {
+            box-shadow: none;
+            opacity: 1;
+        }
+
+        /* SKAK-ANIMATION VID FEL */
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* MOBIL-ANPASSNING */
+        @media (max-width: 600px) {
+            body { padding: 16px; }
+            .logo-container { margin-bottom: 24px; max-width: 200px; }
+            .login-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="logo-container">
+        <img src="Liggande logotyp.svg" class="logo-light" alt="Hallstahammars kommun">
+        <img src="Liggande logotyp white.svg" class="logo-dark" alt="Hallstahammars kommun">
+    </header>
+
+    <main class="login-card">
+        <div id="error-banner" class="error-banner">
+            <span class="material-symbols-outlined">error</span>
+            <span>Fel användarnamn eller lösenord.</span>
+        </div>
+
+        <h1>Logga in</h1>
+        
+        <form action="/map" method="POST" onsubmit="return handleLogin()">
+            <div class="input-group">
+                <input type="text" id="username" name="httpd_username" placeholder=" " required autofocus autocomplete="username">
+                <label for="username">Användarnamn</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" name="httpd_password" placeholder=" " required autocomplete="current-password">
+                <label for="password">Lösenord</label>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span>Logga in</span>
+                <span class="material-symbols-outlined">login</span>
+            </button>
+        </form>
+    </main>
+
+    <script>
+	
+        function handleLogin() {
+            // Sparar flagga att inloggning påbörjats
+            sessionStorage.setItem("login_attempted", "true");
+            
+            // Sparar användarnamnet för att underlätta vid fel
+            const user = document.getElementById("username").value;
+            if (user) localStorage.setItem("username", user);
+            
+            return true;
+        }
+
+        window.onload = function() {
+            // Kontrollera om vi kommer tillbaka efter ett misslyckat försök
+            if (sessionStorage.getItem("login_attempted") === "true") {
+                const banner = document.getElementById('error-banner');
+                const card = document.querySelector('.login-card');
+                
+                // Visa felmeddelande och skaka kortet
+                banner.style.display = 'flex';
+                card.classList.add('shake');
+                
+                sessionStorage.removeItem("login_attempted");
+                
+                // Återfyll användarnamn
+                const savedUser = localStorage.getItem("username");
+                if (savedUser) {
+                    document.getElementById("username").value = savedUser;
+                    document.getElementById("password").focus();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
