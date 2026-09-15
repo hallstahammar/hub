@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Karthubben v1.5: förklarande ingress och medarbetarmärkning på Hämta data -->
+<!-- Karthubben v1.6: Tomtkarta länkad, under utveckling och med inloggning -->
 <html lang="sv">
 <head>
   <meta charset="utf-8">
@@ -599,8 +599,6 @@
       --card-ink: var(--card-public-ink);
     }
 
-    .upcoming-card .tool-copy { grid-column: 2 / -1; }
-
     .tool-lot {
       --card-bg: var(--card-lot);
       --card-ink: var(--card-lot-ink);
@@ -692,25 +690,6 @@
       letter-spacing: 0;
       line-height: 1.3;
       white-space: normal;
-    }
-
-    .upcoming-card {
-      cursor: default;
-    }
-
-    .upcoming-card:hover {
-      transform: translateZ(0);
-      border-radius: 1.75rem;
-      z-index: auto;
-      box-shadow: none;
-    }
-
-    .upcoming-card:hover::after {
-      opacity: 0;
-    }
-
-    .upcoming-card:active {
-      transform: translateZ(0);
     }
 
     .ripple {
@@ -1081,17 +1060,19 @@
           </span>
         </a>
 
-        <!-- När tjänsten släpps: byt div till a och lägg till tjänstens href. -->
-        <div class="hub-card tool-card tool-lot upcoming-card" aria-disabled="true">
+        <a class="hub-card tool-card tool-lot" href="https://karta.hallstahammar.se/tomtkartan">
           <span class="tool-icon">
             <span class="material-symbols-rounded" aria-hidden="true">home_work</span>
           </span>
           <span class="tool-copy">
-            <h3>Tomtkarta</h3>
-            <p>Enkla nybyggnadskartor för bygglov som PDF.</p>
+            <h3>Tomtkartan</h3>
+            <p>Enkla nybyggnadskartor för bygglov som PDF. Kräver inloggning.</p>
             <span class="status-badge">Kommer snart</span>
           </span>
-        </div>
+          <span class="tool-arrow">
+            <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+          </span>
+        </a>
       </div>
     </section>
   </main>
