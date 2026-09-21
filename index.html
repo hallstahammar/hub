@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Karthubben v1.6: Tomtkartan med uppdaterad beskrivning -->
+<!-- Karthubben v1.7: behörighetsmärkning och frivillig inloggningshjälp -->
 <html lang="sv">
 <head>
   <meta charset="utf-8">
@@ -898,6 +898,82 @@
       }
     }
 
+
+    .org-copy { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; margin-top: .65rem; padding: .35rem .65rem; border: 1px solid var(--md-sys-color-outline-variant); border-radius: .85rem; }
+    .org-copy code { font-size: 1rem; user-select: all; }
+    .org-copy button { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; font: inherit; font-size: .875rem; font-weight: 600; border: 0; border-radius: 999px; min-height: 2.75rem; padding: .4rem .65rem; color: var(--md-sys-color-primary); background: transparent; cursor: pointer; }
+    .org-copy button:hover { background: var(--md-sys-color-surface-container-highest); }
+    .org-copy .material-symbols-rounded { font-size: 1.125rem; }
+    .org-domain { overflow-wrap: anywhere; }
+    .login-steps .copy-feedback { font-size: .875rem; }
+    .copy-feedback:empty { display: none; }
+    .permission-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .35rem;
+      padding: .4rem .6rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, currentColor 8%, transparent);
+      font-size: .875rem;
+      font-weight: 550;
+      line-height: 1.25;
+    }
+    .permission-label .material-symbols-rounded { font-size: 1rem; flex-shrink: 0; }
+    .login-help-row { display: flex; justify-content: flex-end; margin-top: .35rem; }
+    .help-button, .dialog-close, .dialog-done {
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      min-height: 2.75rem;
+      border-radius: 999px;
+      transition: background-color 160ms ease;
+    }
+    .help-button { padding: .5rem .85rem; font-size: .875rem; font-weight: 600; color: var(--md-sys-color-primary); background: transparent; }
+    .help-button .material-symbols-rounded { font-size: 1.25rem; }
+    .help-button:hover, .dialog-close:hover { background: var(--md-sys-color-surface-container-highest); }
+    .help-button:focus-visible, .login-dialog button:focus-visible { outline: 3px solid var(--md-sys-color-primary); outline-offset: 3px; }
+    .login-help-row + .tools-section { margin-top: .65rem; }
+    html.dialog-open { overflow: hidden; }
+    .login-dialog {
+      width: min(36rem, calc(100% - 1.5rem));
+      max-height: calc(100dvh - 2rem);
+      padding: clamp(1.25rem, 4vw, 2rem);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 2rem;
+      color: var(--md-sys-color-on-surface);
+      background: var(--md-sys-color-surface-container-low);
+      box-shadow: 0 1rem 4rem rgb(0 0 0 / .25);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .login-dialog::backdrop { background: rgb(0 0 0 / .45); }
+    .login-dialog[open] { animation: enter 220ms var(--ease-emphasized) both; }
+    .dialog-heading { display: flex; align-items: start; gap: .75rem; }
+    .dialog-heading > div { flex: 1; }
+    .dialog-eyebrow { margin: 0 0 .5rem; font-size: .875rem; color: var(--md-sys-color-primary); font-weight: 600; }
+    .login-dialog h2 { font-size: clamp(1.5rem, 5vw, 1.9rem); line-height: 1.2; letter-spacing: -.025em; margin: 0; font-weight: 600; }
+    .dialog-close { flex: 0 0 2.75rem; width: 2.75rem; background: transparent; color: var(--md-sys-color-on-surface-variant); }
+    #login-help-intro { margin: 1rem 0; color: var(--md-sys-color-on-surface-variant); }
+    .login-steps { list-style: none; padding: 0; margin: 1.5rem 0; counter-reset: step; }
+    .login-steps li { display: flex; gap: .85rem; margin-top: 1.1rem; counter-increment: step; }
+    .login-steps li::before { content: counter(step); flex: 0 0 2rem; height: 2rem; display: grid; place-items: center; border-radius: .75rem; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); font-weight: 650; }
+    .login-steps strong, .login-support strong { font-weight: 650; }
+    .login-steps p, .login-support p { margin: .3rem 0 0; color: var(--md-sys-color-on-surface-variant); line-height: 1.5; }
+    .login-support { padding: 1rem; border-radius: 1rem; background: var(--md-sys-color-surface-container-high); }
+    .login-scope { font-size: .875rem; color: var(--md-sys-color-on-surface-variant); margin: 1rem 0; }
+    .dialog-actions { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+    .dialog-done { padding: .7rem 1.2rem; font-weight: 600; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+    .dialog-done:hover { background: color-mix(in srgb, var(--md-sys-color-primary) 90%, var(--md-sys-color-on-primary)); }
+    @media (min-width: 801px) and (max-width: 1050px) {
+      .card-topline { gap: .5rem; flex-wrap: wrap; }
+      .permission-label { order: 3; flex-basis: 100%; justify-content: flex-start; background: transparent; padding: .2rem 0; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -929,7 +1005,7 @@
     </div>
   </header>
 
-  <main class="page-shell" id="verktyg">
+  <main class="page-shell" id="verktyg" tabindex="-1">
     <section class="intro" aria-labelledby="page-title">
       <div class="intro-copy">
         <h1 id="page-title">Vad vill du göra?</h1>
@@ -977,6 +1053,7 @@
           <span class="icon-disc">
             <span class="material-symbols-rounded" aria-hidden="true">view_in_ar</span>
           </span>
+          <span class="permission-label"><span class="material-symbols-rounded" aria-hidden="true">lock</span>Kräver behörighet</span>
           <span class="card-open-icon">
             <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
           </span>
@@ -992,11 +1069,12 @@
         <span class="orbital-motif" aria-hidden="true"></span>
       </a>
 
-      <a class="hub-card featured-card portal-card" href="https://experience.arcgis.com/experience/934fbf8497204caba428aa5db3013b36">
+      <a class="hub-card featured-card portal-card" href="https://experience.arcgis.com/experience/2b56846d6b94465681890685ba4a1978">
         <div class="card-topline">
           <span class="icon-disc">
             <span class="material-symbols-rounded" aria-hidden="true">cloud_lock</span>
           </span>
+          <span class="permission-label"><span class="material-symbols-rounded" aria-hidden="true">lock</span>Kräver behörighet</span>
           <span class="card-open-icon">
             <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
           </span>
@@ -1012,6 +1090,12 @@
         <span class="orbital-motif" aria-hidden="true"></span>
       </a>
     </section>
+
+    <div class="login-help-row">
+      <button class="help-button" type="button" id="login-help-open" aria-haspopup="dialog" aria-controls="login-help">
+        <span class="material-symbols-rounded" aria-hidden="true">help</span>Hjälp med inloggning
+      </button>
+    </div>
 
     <section class="tools-section" aria-labelledby="more-tools-title">
       <div class="section-heading">
@@ -1077,8 +1161,52 @@
     </section>
   </main>
 
+  <dialog class="login-dialog" id="login-help" aria-labelledby="login-help-title" aria-describedby="login-help-intro">
+    <div class="dialog-heading">
+      <div>
+        <p class="dialog-eyebrow">Min scen och Portalen</p>
+        <h2 id="login-help-title">Logga in med ditt kommunkonto</h2>
+      </div>
+      <button class="dialog-close" type="button" aria-label="Stäng inloggningshjälpen" autofocus><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
+    </div>
+    <p id="login-help-intro">Du behöver tilldelad åtkomst i kommunens ArcGIS för att använda de här verktygen.</p>
+    <ol class="login-steps">
+      <li><div><strong>Välj kommunens organisation</strong><p>Om ArcGIS frågar efter organisation: välj ”Din ArcGIS-organisations URL”, skriv <strong>hallstahammar</strong> i fältet före <span class="org-domain">.maps.arcgis.com</span> och fortsätt. Har du redan sparat organisationen kan du välja den direkt.</p><div class="org-copy"><code>hallstahammar</code><button type="button" id="copy-organization" aria-label="Kopiera organisationsnamnet hallstahammar"><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>Kopiera</button></div><p class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></p></div></li>
+      <li><div><strong>Välj organisationens inloggning</strong><p>Välj alternativet med kommunens eller organisationens namn.</p></div></li>
+      <li><div><strong>Använd ditt vanliga kommunkonto</strong><p>Logga in med samma konto som på jobbet och följ anvisningarna. Om du redan är inloggad kan vissa steg hoppas över.</p></div></li>
+    </ol>
+    <div class="login-support"><strong>Inloggad men kommer inte in?</strong><p>Ditt konto behöver rätt ArcGIS-licens och behörighet till verktyget. Kontakta kommunens GIS-ansvariga för hjälp med åtkomst eller organisationsadressen.</p></div>
+    <p class="login-scope">Den här hjälpen gäller Min scen och Portalen. Övriga verktyg kan ha en annan inloggning.</p>
+    <div class="dialog-actions"><button class="dialog-done" type="button">Stäng</button></div>
+  </dialog>
+
   <script>
     (() => {
+      const copyButton = document.getElementById('copy-organization');
+      const copyFeedback = document.getElementById('copy-feedback');
+      copyButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText('hallstahammar');
+          copyFeedback.textContent = 'Kopierat. Klistra in i organisationsfältet.';
+        } catch {
+          copyFeedback.textContent = 'Kunde inte kopiera. Skriv hallstahammar i organisationsfältet.';
+        }
+      });
+      const help = document.getElementById('login-help');
+      const helpButton = document.getElementById('login-help-open');
+      helpButton.addEventListener('click', () => {
+        copyFeedback.textContent = '';
+        help.showModal();
+        document.documentElement.classList.add('dialog-open');
+      });
+      help.querySelectorAll('.dialog-close, .dialog-done').forEach(button => {
+        button.addEventListener('click', () => help.close());
+      });
+      help.addEventListener('close', () => {
+        document.documentElement.classList.remove('dialog-open');
+        helpButton.focus({ preventScroll: true });
+      });
+
       document.querySelectorAll('.hub-card[href]').forEach((element) => {
         element.addEventListener('pointerdown', (event) => {
           if (event.pointerType === 'mouse' && event.button !== 0) return;
