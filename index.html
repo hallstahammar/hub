@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Karthubben v1.7: behörighetsmärkning och frivillig inloggningshjälp -->
+<!-- Karthubben v1.8: enhetlig behörighetsmärkning för begränsade tjänster -->
 <html lang="sv">
 <head>
   <meta charset="utf-8">
@@ -666,32 +666,6 @@
       text-wrap: pretty;
     }
 
-    .status-badge {
-      min-height: 2rem;
-      padding: .3rem .65rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: .5rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, currentColor 11%, transparent);
-      font-size: .72rem;
-      font-weight: 720;
-      letter-spacing: .025em;
-      white-space: nowrap;
-    }
-
-    .access-badge {
-      min-height: 1.75rem;
-      max-width: 100%;
-      padding: .25rem .5rem;
-      font-size: .8125rem;
-      font-weight: 600;
-      letter-spacing: 0;
-      line-height: 1.3;
-      white-space: normal;
-    }
-
     .ripple {
       position: absolute;
       z-index: 5;
@@ -919,6 +893,7 @@
       font-weight: 550;
       line-height: 1.25;
     }
+    .tool-copy .permission-label { margin-top: .5rem; max-width: 100%; text-align: left; }
     .permission-label .material-symbols-rounded { font-size: 1rem; flex-shrink: 0; }
     .login-help-row { display: flex; justify-content: flex-end; margin-top: .35rem; }
     .help-button, .dialog-close, .dialog-done {
@@ -971,7 +946,7 @@
     .dialog-done:hover { background: color-mix(in srgb, var(--md-sys-color-primary) 90%, var(--md-sys-color-on-primary)); }
     @media (min-width: 801px) and (max-width: 1050px) {
       .card-topline { gap: .5rem; flex-wrap: wrap; }
-      .permission-label { order: 3; flex-basis: 100%; justify-content: flex-start; background: transparent; padding: .2rem 0; }
+      .card-topline .permission-label { order: 3; flex-basis: 100%; justify-content: flex-start; background: transparent; padding: .2rem 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1124,7 +1099,7 @@
           <span class="tool-copy">
             <h3>Hämta data</h3>
             <p>Ladda ner kommunens geodata för vidare arbete.</p>
-            <span class="status-badge access-badge">För medarbetare</span>
+            <span class="permission-label"><span class="material-symbols-rounded" aria-hidden="true">lock</span>Kräver behörighet</span>
           </span>
           <span class="tool-arrow">
             <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
@@ -1150,8 +1125,8 @@
           </span>
           <span class="tool-copy">
             <h3>Tomtkartan</h3>
-            <p>Kartor för enklare bygglov som PDF. Kräver inloggning.</p>
-            <span class="status-badge">Kommer snart</span>
+            <p>Kartor för enklare bygglov som PDF.</p>
+            <span class="permission-label"><span class="material-symbols-rounded" aria-hidden="true">lock</span>Kräver behörighet</span>
           </span>
           <span class="tool-arrow">
             <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
@@ -1169,11 +1144,11 @@
       </div>
       <button class="dialog-close" type="button" aria-label="Stäng inloggningshjälpen" autofocus><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
     </div>
-    <p id="login-help-intro">Du behöver tilldelad åtkomst i kommunens ArcGIS för att använda de här verktygen.</p>
+    <p id="login-help-intro">Du behöver tilldelad åtkomst i kommunens ArcGIS. Om du är utloggad gör du så här:</p>
     <ol class="login-steps">
-      <li><div><strong>Välj kommunens organisation</strong><p>Om ArcGIS frågar efter organisation: välj ”Din ArcGIS-organisations URL”, skriv <strong>hallstahammar</strong> i fältet före <span class="org-domain">.maps.arcgis.com</span> och fortsätt. Har du redan sparat organisationen kan du välja den direkt.</p><div class="org-copy"><code>hallstahammar</code><button type="button" id="copy-organization" aria-label="Kopiera organisationsnamnet hallstahammar"><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>Kopiera</button></div><p class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></p></div></li>
-      <li><div><strong>Välj organisationens inloggning</strong><p>Välj alternativet med kommunens eller organisationens namn.</p></div></li>
-      <li><div><strong>Använd ditt vanliga kommunkonto</strong><p>Logga in med samma konto som på jobbet och följ anvisningarna. Om du redan är inloggad kan vissa steg hoppas över.</p></div></li>
+      <li><div><strong>Välj kommunens organisation</strong><p>Välj <strong>”Webbadress till din ArcGIS-organisation”</strong>. Skriv <strong>hallstahammar</strong> i fältet före <span class="org-domain">.maps.arcgis.com</span> och välj <strong>”Fortsätt”</strong>.</p><div class="org-copy"><code>hallstahammar</code><button type="button" id="copy-organization" aria-label="Kopiera organisationsnamnet hallstahammar"><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>Kopiera</button></div><p class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></p><p><strong>Tips:</strong> Kryssa i ”Kom ihåg den här URL:en” innan du fortsätter, så slipper du fylla i organisationsadressen nästa gång.</p></div></li>
+      <li><div><strong>Välj Hallstahammars kommun</strong><p>På nästa sida väljer du den blå knappen <strong>”Hallstahammars kommun”</strong>.</p></div></li>
+      <li><div><strong>Använd ditt vanliga kommunkonto</strong><p>Logga in som vanligt med ditt kommunkonto och följ anvisningarna. Om organisationen är sparad eller du redan är inloggad kan vissa steg hoppas över.</p></div></li>
     </ol>
     <div class="login-support"><strong>Inloggad men kommer inte in?</strong><p>Ditt konto behöver rätt ArcGIS-licens och behörighet till verktyget. Kontakta kommunens GIS-ansvariga för hjälp med åtkomst eller organisationsadressen.</p></div>
     <p class="login-scope">Den här hjälpen gäller Min scen och Portalen. Övriga verktyg kan ha en annan inloggning.</p>
