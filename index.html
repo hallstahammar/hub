@@ -565,7 +565,7 @@
 
     .tool-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: .75rem;
     }
 
@@ -582,6 +582,15 @@
 
     .tool-card:hover {
       border-radius: 2.35rem 1.35rem 2.35rem 2.35rem;
+    }
+
+    .tool-invoice {
+      --card-bg: #ffddd3;
+      --card-ink: #49261c;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .tool-invoice { --card-bg: #633b30; --card-ink: #ffeae3; }
     }
 
     .tool-plans {
@@ -1075,7 +1084,7 @@
     <section class="tools-section" aria-labelledby="more-tools-title">
       <div class="section-heading">
         <h2 id="more-tools-title">Fler verktyg</h2>
-        <p>Planer, underlag, nedladdning och publik information.</p>
+        <p>Planer, kartunderlag, data och fakturering.</p>
       </div>
 
       <div class="tool-grid">
@@ -1090,6 +1099,16 @@
           <span class="tool-arrow">
             <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
           </span>
+        </a>
+
+        <a class="hub-card tool-card tool-invoice" href="https://karta.hallstahammar.se/fakturaunderlag">
+          <span class="tool-icon"><span class="material-symbols-rounded" aria-hidden="true">receipt_long</span></span>
+          <span class="tool-copy">
+            <h3>Fakturaunderlag</h3>
+            <p>Skapa färdiga fakturaunderlag att skicka till ekonomi.</p>
+            <span class="permission-label"><span class="material-symbols-rounded" aria-hidden="true">lock</span>Kräver behörighet</span>
+          </span>
+          <span class="tool-arrow"><span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span></span>
         </a>
 
         <a class="hub-card tool-card tool-data" href="https://karta.hallstahammar.se/fmeserver/apps/HamtaDataIntern">
